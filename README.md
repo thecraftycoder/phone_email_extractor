@@ -91,3 +91,32 @@ mo.group(1)
 ```
 
 If you receive an error message about "missing )" or "unbalanced parenthesis,"  you may have forgotten to include the closing unescaped parenthesis for a group.
+
+### Matching Multiple Groups with the Pipe
+The | character is called a _pipe_ You can use it anywhere you want to match one of many expressions. For example, the regular expression r'Batman|Tina Fey' will match either 'Batman' or 'Tina Fey'.
+
+When _both_ Batman and Tina Fey occur in the searched string, the **first** occurrence of matching text will be returned as the Match object.
+
+```python
+import re
+heroRegex = re.compile(r'Batman|Tina Fey')
+mo1 = heroRegex.search('Batman and Tina Fey')
+mo1.group()
+# 'Batman'
+
+mo2 =  = heroRegex.search('Tina Fey and Batman')
+mo2.group()
+# 'Tina Fey'
+```
+
+You can also use the pipe to match one of several patterns as part of your regex. For example, you wanted to match any of the strings: 'Batman', 'Batmobile', 'Batcopter', and 'Batbat'. Since all these strings start with Bat, it would be nice if you could specify that prefix only once.
+
+```python
+import re
+batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+mo = batRegex.search('Batmobile lost a wheel.')
+mo.group()
+# 'Batmobile'
+mo.group(1)
+# 'mobile'
+```
